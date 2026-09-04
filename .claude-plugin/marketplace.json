@@ -1,0 +1,22 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "cc-plugins",
+  "description": "Custom skills, plugins, and extensions for Claude Code.",
+  "owner": {
+    "name": "panda"
+  },
+  "plugins": [
+    {
+      "name": "cc-skills",
+      "description": "A small library of reusable Claude Code skills: plan, implement, research, tdd, code-review, grill-me, handoff, codebase-design, writing-for-agents.",
+      "category": "development",
+      "source": "./cc-skills"
+    },
+    {
+      "name": "cc-arxiv",
+      "description": "Research-paper skills: arXiv search/download/cite, alphaXiv MCP tools, and workflows for literature reviews, critiques, code audits, and plain-English explainers.",
+      "category": "development",
+      "source": "./cc-arxiv"
+    }
+  ]
+}
