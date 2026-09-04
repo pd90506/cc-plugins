@@ -1,7 +1,7 @@
 {
   "name": "cc-skills",
   "version": "0.1.0",
-  "description": "A small library of reusable Claude Code skills: plan, implement, research, tdd, code-review, grill-me, handoff, codebase-design, writing-for-agents, read-pdf.",
+  "description": "A small library of reusable Claude Code skills: plan, implement, research, tdd, code-review, grill-me, handoff, codebase-design, writing-for-agents.",
   "author": {
     "name": "panda"
   },

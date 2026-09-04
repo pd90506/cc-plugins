@@ -21,7 +21,6 @@ and unchanged apart from install-location notes.
 | `handoff`            | Compact the current conversation into a handoff document for another agent. Manual invocation only.          |
 | `codebase-design`    | Shared vocabulary for designing deep modules; includes deepening and design-it-twice references.              |
 | `writing-for-agents` | How to write skills, `CLAUDE.md` / `AGENTS.md`, and other documents an agent consumes.                        |
-| `read-pdf`           | Read any PDF into Markdown by rendering pages with the bundled `readpdf.py` and reading the pixels.           |
 
 Skill dependencies: `plan` → `research`; `implement` → `tdd`, `code-review`.
 All are bundled here, and each dependent skill specifies an inline fallback if
