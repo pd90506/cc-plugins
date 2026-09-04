@@ -1,10 +1,10 @@
 # cc-arxiv
 
-Research-paper skills for [Claude Code](https://docs.claude.com/en/docs/claude-code), packaged as a plugin. Migrated from the Pi extension `pi-arxiv` with the runtime code removed: alphaXiv is reached directly as an MCP server, arXiv through a small bundled script, and the workflows are plain skills.
+Research-paper skills for [Claude Code](https://docs.claude.com/en/docs/claude-code), packaged as a plugin. Migrated from the Pi extension `pi-arxiv` with the runtime code removed: arXiv is reached through a small bundled script, alphaXiv through its hosted MCP connector (which you connect separately), and the workflows are plain skills.
 
 ## What you get
 
-**MCP tools** (server `alphaxiv`, tool names `mcp__plugin_cc-arxiv_alphaxiv__<tool>`), provided by alphaXiv's hosted server:
+**alphaXiv MCP tools** the skills rely on. The plugin no longer bundles the server; connect alphaXiv once (see Setup) and the tools appear as `mcp__alphaxiv__<tool>` in Claude Code or under the connector in Cowork:
 
 | Tool | Purpose |
 | --- | --- |
@@ -31,11 +31,18 @@ The workflow skills name Claude Code tools literally (`WebSearch`, `WebFetch`, `
 
 ## Setup
 
-1. **alphaXiv API key.** Get one from your alphaXiv account settings. The plugin declares it as a `userConfig` option, so Claude Code (and Cowork) prompt for it when the plugin is enabled and store it in the OS keychain. It is never written to the repo or to `settings.json`.
+1. **alphaXiv connector.** The plugin does not ship an MCP config or handle any credentials. Connect alphaXiv's hosted server once, with OAuth:
 
-   To change it later, run `/plugin` and reconfigure `cc-arxiv`.
+   - **Cowork:** Customize → Connectors → add `https://api.alphaxiv.org/mcp/v1` and sign in when prompted.
+   - **Claude Code:**
 
-   The plugin's `.mcp.json` sends it as a bearer token. Without it the `alphaxiv` server reports HTTP 401 and only the alphaXiv tools are unavailable; the `arxiv` skill and everything else still works.
+     ```bash
+     claude mcp add --transport http --scope user alphaxiv https://api.alphaxiv.org/mcp/v1
+     ```
+
+     then run `/mcp` in a session and choose **Authenticate** for `alphaxiv`.
+
+   Without the connector only the alphaXiv-backed steps are unavailable; the `arxiv` skill and everything else still works.
 
 2. **Python 3.9+** on `PATH` as `python3`. `arxiv.py` has no dependencies. PDFs are read with Claude Code's built-in `Read` tool.
 
@@ -47,17 +54,17 @@ The workflow skills name Claude Code tools literally (`WebSearch`, `WebFetch`, `
 claude --plugin-dir /Users/panda/repo/Agents/cc-plugins/cc-arxiv
 ```
 
-**Persistent install** from the local `cc-plugins` marketplace:
+**Persistent install** from the `cc-plugins` marketplace (GitHub, or the local checkout):
 
 ```bash
-claude plugin marketplace add /Users/panda/repo/Agents/cc-plugins
+claude plugin marketplace add pd90506/cc-plugins
 ```
 
 ```bash
 claude plugin install cc-arxiv@cc-plugins
 ```
 
-Run `/mcp` in a session to confirm `plugin:cc-arxiv:alphaxiv` is connected.
+Run `/mcp` in a session to confirm `alphaxiv` is connected.
 
 ## Releasing a change
 

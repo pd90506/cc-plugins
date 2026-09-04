@@ -13,7 +13,7 @@ Layout conventions:
 Plugins:
 
 - `cc-skills/` — reusable skills (plan, implement, research, tdd, code-review, grill-me, handoff, codebase-design, writing-for-agents)
-- `cc-arxiv/` — research-paper skills (arxiv, literature-review, source-comparison, research-review, paper-code-audit, deep-research, eli5) plus the alphaXiv MCP server
+- `cc-arxiv/` — research-paper skills (arxiv, literature-review, source-comparison, research-review, paper-code-audit, deep-research, eli5) (uses the separately connected alphaXiv MCP server)
 
 `.claude-plugin/marketplace.json` lists the plugins so this repo can be added as a marketplace.
 
@@ -24,4 +24,4 @@ claude plugin marketplace add pd90506/cc-plugins
 claude plugin install cc-arxiv@cc-plugins
 ```
 
-Cowork (Claude desktop app): open **Customize → Plugins → Add marketplace**, enter `pd90506/cc-plugins`, then install the plugin you want. Plugins that need a secret (cc-arxiv needs an alphaXiv API key) prompt for it at install; secrets are never stored in this repo.
+Cowork (Claude desktop app): open **Customize → Plugins → Add marketplace**, enter `pd90506/cc-plugins`, then install the plugin you want. No plugin here stores or prompts for secrets; cc-arxiv expects you to connect the alphaXiv MCP server yourself (OAuth).
