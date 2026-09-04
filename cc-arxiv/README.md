@@ -31,17 +31,9 @@ The workflow skills name Claude Code tools literally (`WebSearch`, `WebFetch`, `
 
 ## Setup
 
-1. **alphaXiv API key.** Get one from your alphaXiv account settings, then export it in the shell that launches Claude Code:
+1. **alphaXiv API key.** Get one from your alphaXiv account settings. The plugin declares it as a `userConfig` option, so Claude Code (and Cowork) prompt for it when the plugin is enabled and store it in the OS keychain. It is never written to the repo or to `settings.json`.
 
-   ```bash
-   export ALPHAXIV_API_KEY=...
-   ```
-
-   The desktop app does not inherit shell exports, so there put it in `~/.claude/settings.json` instead:
-
-   ```json
-   { "env": { "ALPHAXIV_API_KEY": "..." } }
-   ```
+   To change it later, run `/plugin` and reconfigure `cc-arxiv`.
 
    The plugin's `.mcp.json` sends it as a bearer token. Without it the `alphaxiv` server reports HTTP 401 and only the alphaXiv tools are unavailable; the `arxiv` skill and everything else still works.
 
