@@ -9,7 +9,7 @@ allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/scripts/arxiv.py *)
 
 A dependency-free script at `${CLAUDE_SKILL_DIR}/scripts/arxiv.py` talks to the arXiv API. Run it with Bash; it needs only `python3`.
 
-If this skill was invoked with arguments (`$ARGUMENTS`), route on the first word: `search`, `get`, or `cite` pass straight through to that command. Otherwise an arXiv id or URL means `search --ids <it>`, and any other text is `search --query "<it>"`. Show the output and stop.
+If this skill was invoked with arguments (`$ARGUMENTS`), route on the first word: `search`, `get`, or `cite` pass straight through to that command. Otherwise an arXiv id or URL means `search --ids <it>`, and any other text is a title phrase: `search --query 'ti:"<it>"'` (bare text ranks poorly; if that returns nothing, retry with `all:"<it>"`). Show the output and stop.
 
 ## Commands
 
