@@ -1,0 +1,10 @@
+{
+  "name": "cc-arxiv",
+  "version": "0.2.0",
+  "description": "Research-paper skills for Claude Code: arXiv search/download/cite, alphaXiv MCP tools, and workflows for literature reviews, critiques, code audits, and plain-English explainers.",
+  "author": {
+    "name": "panda"
+  },
+  "license": "MIT",
+  "keywords": ["claude-code", "arxiv", "alphaxiv", "research", "papers", "skills"]
+}
