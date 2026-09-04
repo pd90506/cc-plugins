@@ -15,6 +15,7 @@ import argparse
 import os
 import re
 import sys
+import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -121,11 +122,24 @@ def parse_feed(xml_text):
 
 # ---- network ---------------------------------------------------------------
 
-def build_params(query, ids, start, max_results, sort_by, sort_order, submitted_from, submitted_to):
+def normalize_ids(raw_ids):
+    return [i for i in (normalize_arxiv_id(x) for x in (raw_ids or [])) if i]
+
+
+def primary_category(paper):
+    return paper.get("primary_category") or (paper["categories"][0] if paper["categories"] else "")
+
+
+def year_of(paper):
+    return paper["published"][:4]
+
+
+def build_params(query=None, ids=None, start=0, max_results=10, sort_by=None, sort_order=None,
+                 submitted_from=None, submitted_to=None):
     clause = build_submitted_date_clause(submitted_from, submitted_to)
     if clause:
         query = "(%s) AND %s" % (query, clause) if query else clause
-    ids = [i for i in (normalize_arxiv_id(x) for x in (ids or [])) if i]
+    ids = normalize_ids(ids)
     if not query and not ids:
         raise ValueError("Provide a search query, a date range, or at least one arXiv id.")
     params = {}
@@ -152,8 +166,7 @@ def search_arxiv(**kwargs):
 
 
 def lookup(ids):
-    return search_arxiv(query=None, ids=ids, start=0, max_results=len(ids), sort_by=None,
-                        sort_order=None, submitted_from=None, submitted_to=None)["papers"]
+    return search_arxiv(ids=ids, max_results=len(ids))["papers"]
 
 
 # ---- formatting ------------------------------------------------------------
@@ -167,7 +180,7 @@ def format_paper(paper, index=None):
     authors = paper["authors"]
     authors = ", ".join(authors[:4]) + ", et al." if len(authors) > 4 else ", ".join(authors)
     date = paper["published"][:10]
-    cat = paper.get("primary_category") or (paper["categories"][0] if paper["categories"] else "")
+    cat = primary_category(paper)
     lines = [
         "%s%s" % (num, paper["title"]),
         "   id: %s%s%s" % (paper["id"], "  [%s]" % cat if cat else "", "  (%s)" % date if date else ""),
@@ -192,7 +205,7 @@ def _last_name(author):
 def bibtex_key(paper):
     first = paper["authors"][0] if paper["authors"] else "arxiv"
     last = re.sub(r"[^a-z0-9]", "", _last_name(first).lower()) or "arxiv"
-    year = paper["published"][:4]
+    year = year_of(paper)
     word = ""
     for w in paper["title"].split():
         w = re.sub(r"[^a-z0-9]", "", w.lower())
@@ -203,12 +216,12 @@ def bibtex_key(paper):
 
 
 def to_bibtex(paper):
-    primary = paper.get("primary_category") or (paper["categories"][0] if paper["categories"] else "")
+    primary = primary_category(paper)
     entry_type = "article" if paper.get("journal_ref") else "misc"
     fields = [
         ("title", "{%s}" % paper["title"]),
         ("author", " and ".join(paper["authors"])),
-        ("year", paper["published"][:4]),
+        ("year", year_of(paper)),
         ("eprint", id_without_version(paper["id"])),
         ("archivePrefix", "arXiv"),
         ("primaryClass", primary),
@@ -221,7 +234,7 @@ def to_bibtex(paper):
 
 
 def to_citation(paper):
-    year = paper["published"][:4]
+    year = year_of(paper)
     authors = paper["authors"]
     if len(authors) > 1:
         authors = "%s & %s" % (", ".join(authors[:-1]), authors[-1])
@@ -283,7 +296,7 @@ def cmd_get(a):
 
 
 def cmd_cite(a):
-    ids = [i for i in (normalize_arxiv_id(x) for x in a.ids) if i]
+    ids = normalize_ids(a.ids)
     if not ids:
         sys.exit("Provide one or more arXiv ids.")
     papers = lookup(ids)

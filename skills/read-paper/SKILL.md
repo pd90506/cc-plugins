@@ -10,7 +10,7 @@ The text layer of a paper extracts cleanly for prose, headings, and reference li
 
 `readpaper.py` (at `${CLAUDE_SKILL_DIR}/readpaper.py`) uses PyMuPDF, installing it on first run if missing and falling back to `pypdf` + macOS `sips` if that install fails. It extracts the text layer per page (`text`), renders whole pages for a page-by-page read (`pages`), and crops individual figures and tables (`find`, `crop`).
 
-**Prefer arXiv LaTeX source over any PDF.** If the paper is on arXiv, its LaTeX gives cleaner equations than pixel transcription ever will: find it with the `arxiv` skill's `search` command, and read the report with `get_paper_content` / pin a claim with `answer_pdf_queries`. Drop to this PDF flow when there is no source, the file is local, or you must verify the typeset original.
+**Prefer alphaXiv's text over pixel transcription when the paper is on arXiv.** `get_paper_content` (`url`; `fullText: true` for the raw text) returns the paper's text without the layout damage of a PDF text layer, and `answer_pdf_queries` pins a specific claim or number. Find the paper with the `arxiv` skill's `search` command if you only have a title. Drop to this PDF flow when the paper is not on arXiv, the file is local, or you must verify the typeset original.
 
 **`Read` can open a PDF directly** (a whole file up to 10 pages, longer ones via `pages` ranges of up to 20). That is the quickest first look at a short paper. Use `readpaper.py` when you need per-page text with page citations, figure and table crops, or control over DPI.
 

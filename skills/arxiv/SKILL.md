@@ -9,7 +9,7 @@ allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/scripts/arxiv.py *)
 
 A dependency-free script at `${CLAUDE_SKILL_DIR}/scripts/arxiv.py` talks to the arXiv API. Run it with Bash; it needs only `python3`.
 
-If this skill was invoked with arguments (`$ARGUMENTS`), treat them as a search: an arXiv id or URL means `search --ids`, anything else is a `--query`. Show the results and stop.
+If this skill was invoked with arguments (`$ARGUMENTS`), route on the first word: `search`, `get`, or `cite` pass straight through to that command. Otherwise an arXiv id or URL means `search --ids <it>`, and any other text is `search --query "<it>"`. Show the output and stop.
 
 ## Commands
 
@@ -17,6 +17,11 @@ If this skill was invoked with arguments (`$ARGUMENTS`), treat them as a search:
 |---|---|
 | `search --query "<q>" [--max N] [--start N] [--sort-by relevance\|lastUpdatedDate\|submittedDate] [--sort-order ascending\|descending] [--from YYYY-MM-DD] [--to YYYY-MM-DD]` | field search; up to 100 results (default 10) |
 | `search --ids <id> [<id> ...]` | fetch specific papers by id or URL |
+
+`search` prints, per paper: id (quote it exactly, version suffix included), primary category, date, authors, abs and pdf URLs, trimmed abstract.
+
+| Command | Purpose |
+|---|---|
 | `get <id|url> [--dir DIR] [--filename NAME]` | download the PDF as `<id> - <title>.pdf` (default dir `~/Downloads/arxiv`) |
 | `cite <id|url> [<id> ...] [--format bibtex\|text]` | BibTeX (default) or APA-style text |
 
@@ -35,5 +40,3 @@ Field prefixes: `ti:` title, `au:` author, `abs:` abstract, `cat:` category (e.g
 - **This skill:** the user names an author, title, id, category, or date range, wants a PDF on disk, or wants a citation.
 - **alphaXiv `discover_papers`** (MCP tool `mcp__plugin_cc-arxiv_alphaxiv__discover_papers`): natural-language topic discovery. Pass `keywords[]`, a `question`, and `difficulty` 1–10.
 - After `get`, read the PDF with `Read`, or with the `read-paper` skill when equations, tables, or figures matter.
-
-Each result lists the id, primary category, date, authors, abs and pdf URLs, and a trimmed abstract. Quote ids exactly, including any version suffix.

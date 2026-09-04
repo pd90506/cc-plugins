@@ -38,7 +38,13 @@ The workflow skills name Claude Code tools literally (`WebSearch`, `WebFetch`, `
    export ALPHAXIV_API_KEY=...
    ```
 
-   The plugin's `.mcp.json` sends it as a bearer token. Without it, the `alphaxiv` server fails to connect and only the alphaXiv tools are unavailable; the `arxiv` skill and everything else still works.
+   The desktop app does not inherit shell exports, so there put it in `~/.claude/settings.json` instead:
+
+   ```json
+   { "env": { "ALPHAXIV_API_KEY": "..." } }
+   ```
+
+   The plugin's `.mcp.json` sends it as a bearer token. Without it the `alphaxiv` server reports HTTP 401 and only the alphaXiv tools are unavailable; the `arxiv` skill and everything else still works.
 
 2. **Python 3.9+** on `PATH` as `python3`. `arxiv.py` has no dependencies. `readpaper.py` installs PyMuPDF with `pip install --user` on first run if it is missing, falling back to `pypdf` plus macOS `sips`.
 
