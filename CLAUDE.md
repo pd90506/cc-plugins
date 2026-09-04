@@ -2,7 +2,7 @@
 
 ## Purpose
 
-A Claude Code plugin for research-paper work. It ships skills plus one MCP server entry (`.mcp.json`, pointing at alphaXiv's hosted server) and two bundled Python scripts. There is no other runtime code and no Node dependency.
+A Claude Code plugin for research-paper work. It ships skills plus one MCP server entry (`.mcp.json`, pointing at alphaXiv's hosted server) and one bundled Python script. There is no other runtime code and no Node dependency.
 
 ## Conventions
 

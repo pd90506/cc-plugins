@@ -20,7 +20,6 @@ The server also exposes alphaXiv library, folder, and researcher tools; the skil
 | Skill | Description |
 | --- | --- |
 | `arxiv` | Search arXiv by author/title/id/category/date, download a PDF, or emit BibTeX / APA citations. Bundles `scripts/arxiv.py`. |
-| `read-paper` | Read a paper PDF end to end: text layer first, then render equations, tables, and figures to PNG. Bundles `readpaper.py` (PyMuPDF). |
 | `literature-review` | Plan, gather, synthesize, cite, verify, deliver a literature review to `outputs/`. |
 | `source-comparison` | Grounded comparison matrix across papers, tools, or claims. |
 | `research-review` | Severity-graded critique of a paper or draft. |
@@ -46,7 +45,7 @@ The workflow skills name Claude Code tools literally (`WebSearch`, `WebFetch`, `
 
    The plugin's `.mcp.json` sends it as a bearer token. Without it the `alphaxiv` server reports HTTP 401 and only the alphaXiv tools are unavailable; the `arxiv` skill and everything else still works.
 
-2. **Python 3.9+** on `PATH` as `python3`. `arxiv.py` has no dependencies. `readpaper.py` installs PyMuPDF with `pip install --user` on first run if it is missing, falling back to `pypdf` plus macOS `sips`.
+2. **Python 3.9+** on `PATH` as `python3`. `arxiv.py` has no dependencies. PDFs are read with Claude Code's built-in `Read` tool.
 
 ## Install
 

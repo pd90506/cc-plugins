@@ -1,7 +1,7 @@
 {
   "name": "cc-arxiv",
-  "version": "0.1.2",
-  "description": "Research-paper skills for Claude Code: arXiv search/download/cite, alphaXiv MCP tools, and workflows for literature reviews, paper reading, critiques, code audits, and plain-English explainers.",
+  "version": "0.2.0",
+  "description": "Research-paper skills for Claude Code: arXiv search/download/cite, alphaXiv MCP tools, and workflows for literature reviews, critiques, code audits, and plain-English explainers.",
   "author": {
     "name": "panda"
   },

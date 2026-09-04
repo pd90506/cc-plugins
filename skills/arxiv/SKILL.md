@@ -39,4 +39,4 @@ Field prefixes: `ti:` title, `au:` author, `abs:` abstract, `cat:` category (e.g
 
 - **This skill:** the user names an author, title, id, category, or date range, wants a PDF on disk, or wants a citation.
 - **alphaXiv `discover_papers`** (MCP tool `mcp__plugin_cc-arxiv_alphaxiv__discover_papers`): natural-language topic discovery. Pass `keywords[]`, a `question`, and `difficulty` 1–10.
-- After `get`, read the PDF with `Read`, or with the `read-paper` skill when equations, tables, or figures matter.
+- After `get`, read the PDF with `Read` (whole file up to 10 pages, longer ones via `pages` ranges).
