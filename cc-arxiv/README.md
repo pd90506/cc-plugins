@@ -46,6 +46,19 @@ The workflow skills name Claude Code tools literally (`WebSearch`, `WebFetch`, `
 
 2. **Python 3.9+** on `PATH` as `python3`. `arxiv.py` has no dependencies. PDFs are read with Claude Code's built-in `Read` tool.
 
+## Hermes Agent compatibility
+
+Hermes-compatible equivalents are in [`../.hermes/skills/research/`](../.hermes/skills/research/). They preserve the cc-arxiv workflows while using Hermes tools (`web_search`, `web_extract`, `delegate_task`, `read_file`, and `write_file`) rather than Claude Code-specific tool names. The bundled arXiv client is included under `cc-arxiv-arxiv/scripts/`.
+
+Trust this checkout once; the seven project skills load in Hermes sessions started inside the repository:
+
+```bash
+cd /path/to/cc-plugins
+hermes skills trust .
+```
+
+They are intentionally namespaced as `cc-arxiv-*`, avoiding a collision with Hermes's built-in `arxiv` skill. alphaXiv MCP calls are optional: use them only if an alphaXiv connector is visible; the Hermes skills otherwise use the arXiv client and web tools.
+
 ## Install
 
 **Quick test (no install)** — load the plugin for one session:
